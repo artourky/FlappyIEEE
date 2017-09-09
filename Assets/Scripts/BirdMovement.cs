@@ -1,10 +1,15 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 public class BirdMovement : MonoBehaviour {
 
     public static bool amIDead = false;
     public static int score = 0;
+
+    public GameObject clickToFly;
+
+    public Text highScoreTxt;
 
     public Image lessThan10;
     public Image moreThan10;
@@ -25,6 +30,7 @@ public class BirdMovement : MonoBehaviour {
     Rigidbody2D myRigidbody;
 
     bool didFlap = false;
+    bool firstTap = true;
 
     int highScore = 0;
 
@@ -38,18 +44,47 @@ public class BirdMovement : MonoBehaviour {
         }
 
         highScore = PlayerPrefs.GetInt("HighScore", 0);
+        highScoreTxt.text = "High Score: " + highScore;
+        //print(highScore);
+
+        if (firstTap)
+        {
+            Time.timeScale = 0f;
+        }
 	}
 	
 	// Update is called once per frame
 	void Update () {
+        if (Input.GetKeyDown(KeyCode.R))
+        {
+            SceneManager.LoadScene(0);
+
+            // Reset Values
+            amIDead = didFlap = firstTap = false;
+            score = 0;
+        }
+
         if (Input.GetKeyDown(KeyCode.Space) || Input.GetMouseButtonDown(0))
         {
-            didFlap = true;
+            if (!firstTap)
+            {
+                didFlap = true;
+            }
+            else
+            {
+                firstTap = false;
+
+                // Hide Menu
+                clickToFly.SetActive(false);
+
+                Time.timeScale = 1f;
+            }
         }
 
         if (score > highScore)
         {
             highScore = score;
+            highScoreTxt.text = "High Score: " + highScore;
             PlayerPrefs.SetInt("HighScore", highScore);
         }
 
