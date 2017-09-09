@@ -6,6 +6,10 @@ public class BirdMovement : MonoBehaviour {
     public float maxForce = 5f;
     public float forwardSpeed = 1f;
 
+    public Animator myAnimator;
+
+    public bool amIDead = false;
+
     Rigidbody2D myRigidbody;
 
     bool didFlap = false;
@@ -25,6 +29,11 @@ public class BirdMovement : MonoBehaviour {
 
     private void FixedUpdate()
     {
+        if (amIDead)
+        {
+            return;
+        }
+
         myRigidbody.velocity = new Vector2(forwardSpeed, myRigidbody.velocity.y);
 
         float angle = 0f;
@@ -52,5 +61,11 @@ public class BirdMovement : MonoBehaviour {
         }
 
         transform.rotation = Quaternion.Euler(0f, 0f, angle);
+    }
+
+    private void OnCollisionEnter2D(Collision2D collision)
+    {
+        amIDead = true;
+        myAnimator.SetTrigger("hit");
     }
 }
