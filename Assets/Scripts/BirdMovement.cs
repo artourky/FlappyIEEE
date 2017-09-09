@@ -1,6 +1,16 @@
 ﻿using UnityEngine;
+using UnityEngine.UI;
 
 public class BirdMovement : MonoBehaviour {
+
+    public static bool amIDead = false;
+    public static int score = 0;
+
+    public Image lessThan10;
+    public Image moreThan10;
+    public Image moreThan100;
+
+    public Sprite[] numbers;
 
     public float jumpForce = 2f;
     public float maxForce = 5f;
@@ -8,15 +18,26 @@ public class BirdMovement : MonoBehaviour {
 
     public Animator myAnimator;
 
-    public bool amIDead = false;
+    public bool godMode = false;
+
+    public bool deletePrefs = false;
 
     Rigidbody2D myRigidbody;
 
     bool didFlap = false;
 
+    int highScore = 0;
+
 	// Use this for initialization
 	void Start () {
         myRigidbody = GetComponent<Rigidbody2D>();
+
+        if (deletePrefs)
+        {
+            PlayerPrefs.DeleteAll();
+        }
+
+        highScore = PlayerPrefs.GetInt("HighScore", 0);
 	}
 	
 	// Update is called once per frame
@@ -24,6 +45,31 @@ public class BirdMovement : MonoBehaviour {
         if (Input.GetKeyDown(KeyCode.Space) || Input.GetMouseButtonDown(0))
         {
             didFlap = true;
+        }
+
+        if (score > highScore)
+        {
+            highScore = score;
+            PlayerPrefs.SetInt("HighScore", highScore);
+        }
+
+        if (!amIDead)
+        {
+            if (score >= 100)
+            {
+                moreThan100.sprite = numbers[score / 100];
+                moreThan10.sprite = numbers[(score % 100) / 10];
+                lessThan10.sprite = numbers[((score % 100) % 10)];
+            }
+            else if (score >= 10)
+            {
+                moreThan10.sprite = numbers[score / 10];
+                lessThan10.sprite = numbers[(score % 10)];
+            }
+            else
+            {
+                lessThan10.sprite = numbers[score];
+            }
         }
 	}
 
@@ -63,8 +109,18 @@ public class BirdMovement : MonoBehaviour {
         transform.rotation = Quaternion.Euler(0f, 0f, angle);
     }
 
+    public static void AddScore()
+    {
+        score++;
+    }
+
     private void OnCollisionEnter2D(Collision2D collision)
     {
+        if (godMode)
+        {
+            return;
+        }
+
         amIDead = true;
         myAnimator.SetTrigger("hit");
     }

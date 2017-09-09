@@ -7,8 +7,9 @@ public class SkyDelay : MonoBehaviour {
     public BirdMovement player;
 
     void FixedUpdate () {
-        if (!player.amIDead)
+        if (!BirdMovement.amIDead)
         {
+            speed = player.forwardSpeed - 0.1f;
             Vector3 pos = transform.position;
             pos.x += speed * Time.fixedDeltaTime;
             transform.position = pos; 
