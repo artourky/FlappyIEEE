@@ -11,7 +11,6 @@ public class CameraOffset : MonoBehaviour {
         if (player)
         {
             offsetX = transform.position.x - player.position.x;
-            print(offsetX);
         }
 	}
 	
