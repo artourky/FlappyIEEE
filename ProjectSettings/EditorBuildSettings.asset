@@ -8,3 +8,6 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/GameFinal.unity
     guid: 45570cab6b8371f4687f30e4b10060c3
+  - enabled: 0
+    path: Assets/Scenes/IEEEFinal.unity
+    guid: ea80dd6099a5ace489ce8de599024d27
