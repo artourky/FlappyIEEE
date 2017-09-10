@@ -8,6 +8,7 @@ public class BirdMovement : MonoBehaviour {
     public static int score = 0;
 
     public GameObject clickToFly;
+    public GameObject tapToRestart;
 
     public Text highScoreTxt;
 
@@ -60,12 +61,25 @@ public class BirdMovement : MonoBehaviour {
             SceneManager.LoadScene(0);
 
             // Reset Values
-            amIDead = didFlap = firstTap = false;
+            firstTap = true;
+            amIDead = didFlap = false;
             score = 0;
         }
 
         if (Input.GetKeyDown(KeyCode.Space) || Input.GetMouseButtonDown(0))
         {
+            if (amIDead)
+            {
+                SceneManager.LoadScene(0);
+
+                // Reset Values
+                firstTap = true;
+                amIDead = didFlap = false;
+                score = 0;
+
+                return;
+            }
+
             if (!firstTap)
             {
                 didFlap = true;
@@ -76,6 +90,9 @@ public class BirdMovement : MonoBehaviour {
 
                 // Hide Menu
                 clickToFly.SetActive(false);
+
+                //transform.GetChild(0).transform.position = Vector3.zero;
+                myAnimator.SetTrigger("Play");
 
                 Time.timeScale = 1f;
             }
@@ -105,6 +122,18 @@ public class BirdMovement : MonoBehaviour {
             {
                 lessThan10.sprite = numbers[score];
             }
+        }
+        else
+        {
+            // Show Final score
+            tapToRestart.SetActive(true);
+
+            if (score == highScore)
+            {
+                tapToRestart.transform.GetChild(0).gameObject.SetActive(true);
+            }
+
+            tapToRestart.transform.GetChild(1).GetComponent<Text>().text = "You scored " + score + "!";
         }
 	}
 
@@ -156,7 +185,8 @@ public class BirdMovement : MonoBehaviour {
             return;
         }
 
+        myAnimator.SetTrigger("Dead");
+
         amIDead = true;
-        myAnimator.SetTrigger("hit");
     }
 }

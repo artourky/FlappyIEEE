@@ -117,9 +117,9 @@ Animator:
   m_GameObject: {fileID: 1198623584902186}
   m_Enabled: 1
   m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: 69dd85455b49f0346a31d770126e88aa, type: 2}
+  m_Controller: {fileID: 9100000, guid: 9591a0e6e041eb44a9f5a0ff3cd6a933, type: 2}
   m_CullingMode: 0
-  m_UpdateMode: 0
+  m_UpdateMode: 2
   m_ApplyRootMotion: 0
   m_LinearVelocityBlending: 0
   m_WarningMessage: 
@@ -137,6 +137,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   clickToFly: {fileID: 0}
+  tapToRestart: {fileID: 0}
   highScoreTxt: {fileID: 0}
   lessThan10: {fileID: 0}
   moreThan10: {fileID: 0}
@@ -190,7 +191,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 10
-  m_Sprite: {fileID: 21300008, guid: b8ec54173f82c524c8d01b50bce7dbd1, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 71f13b287ba546d45b13026862ff6322, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0

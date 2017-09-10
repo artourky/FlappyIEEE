@@ -4,7 +4,7 @@ public class LoopingBG : MonoBehaviour {
 
     public int bgNumber = 5;
 
-    float pipeMax = 0.8f;
+    float pipeMax = 1.2f;
     float pipeMin = -0.21f;
 
     private void Start()
@@ -22,6 +22,10 @@ public class LoopingBG : MonoBehaviour {
     private void OnTriggerEnter2D(Collider2D collision)
     {
         //print(collision.name);
+        if (collision.tag == "IGNOREME")
+        {
+            return;
+        }
         
         float widthOfBGObj = ((BoxCollider2D)collision).size.x;
 
