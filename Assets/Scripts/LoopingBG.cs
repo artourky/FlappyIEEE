@@ -24,6 +24,7 @@ public class LoopingBG : MonoBehaviour {
         //print(collision.name);
         if (collision.tag == "IGNOREME")
         {
+            collision.transform.position = new Vector3(3.92f, collision.transform.position.y, collision.transform.position.z);
             return;
         }
         
